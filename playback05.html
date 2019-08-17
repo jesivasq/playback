@@ -1,0 +1,180 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>playback05</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			width: 300px;
+			margin: auto;
+		}
+
+		.button {
+			width: 100px;
+			height: 100px;
+			float: left;
+			margin: 15px;
+			color: black;
+			display: flex;
+			background: #ccc;
+			border: #555 3px solid;
+		}
+
+	
+		/* 
+		.btn1 instead of #btn1 so we can add .blink later
+		and have it work (class can't override id formatting)
+		*/
+		.btn1 {
+			background: #ff0066;
+		}
+
+		.btn2 {
+			background: #00ffff;
+		}
+		.btn3 {
+			background: #80ff00;
+		}
+		.btn4 {
+			background: #ffff00;
+		}
+
+		#main div:hover {
+			background: #fff;
+		}
+
+		#main div:active {
+			background: #111;
+		}
+
+		#header {
+			width: 200px;
+		}
+
+		.blink {
+			background: #fff;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="header">
+		<h1>Look at the console</h1>
+		<p>Auto-choose  a few buttons. If the user picks the correct buttons, there's a match.</p>
+		<p>Each auto-chosen button will blink white for an instant then return it to its normal color.</p>
+	</div>
+	<br class="endFloat" />
+	<div id="main">
+		<div id="btn1" class="button btn1" onclick="clicky(this)">
+		1
+		</div>
+		<div id="btn2" class="button btn2" onclick="clicky(this)">
+			2
+		</div>
+		<div id="btn3" class="button btn3" onclick="clicky(this)">
+			3
+		</div>
+		<div id="btn4" class="button btn4" onclick="clicky(this)">
+			4
+		</div>
+
+
+	</div>
+
+
+
+<script>
+	
+	// array of buttons that can be pushed
+	var options = ["btn1", "btn2", "btn3", "btn4"];
+	console.log(options);
+	// randomly pick a few buttons to push
+	var count = 3;
+	var target = "";
+	var index = [];
+	var delay = 1000; // ms to delay
+
+	/*
+	for( i = 0 ; i < count; i++){
+		index[i] = Math.floor(Math.random()*4);
+		target += options[index[i]];
+		// show which button was picked by momentarily highlighting it
+		var blinker = document.getElementById(options[index[i]]);
+		blinker.classList.add("blink");
+		var t = setTimeout(blinky, 500, blinker);
+
+
+		//var t = setTimeout(blinky(blinker), 1500);
+		
+		//var t = setTimeout(function(){blinker.classList.remove("blink")}, 1000);
+		//console.log(t);
+	}
+	*/
+
+	// https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
+	var i = 0;
+	function f() {
+		index[i] = Math.floor(Math.random()*4);
+		target += options[index[i]];
+		console.log(target);
+		console.log(index);
+
+		var blinker = document.getElementById(options[index[i]]);
+		blinker.classList.add("blink");
+
+		i++;
+		if( i < count){
+			setTimeout(f, delay);
+			//setTimeout(blinky, delay, blinker);
+			//blinker.classList.remove("blink");
+		}
+		setTimeout(blinky, delay/2, blinker);
+		//blinker.classList.remove("blink");
+	}
+	f();
+
+
+
+	// console.log("target=" + target);
+	// console.log("index=" + index);
+	
+	var chosen = "";
+	function clicky(e){
+		count--;
+		chosen += e.id;
+		console.log(chosen);
+		// if the user correctly clicks the chosen buttons, they win
+		if (chosen == target){
+			console.log('match');
+		} else if (count == 0){
+			console.log('fail');
+		}
+	}
+
+	function blinky(element){
+		//console.log(element);
+		element.classList.remove("blink");
+		//console.log(element);
+	}
+</script>
+
+</body>
+</html>

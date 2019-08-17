@@ -1,0 +1,102 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>Tiny Test 2</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			width: 250px;
+			margin: auto;
+		}
+
+		.button {
+			width: 100px;
+			height: 100px;
+			float: left;
+			margin: 5px;
+			background: #ccc;
+			//border-radius: 25%;
+			animation: rotate 5s infinite linear reverse;
+			display: flex;
+		}
+
+		.black {
+			background: black;
+			width: 50%;
+			height: 50%;
+			margin: auto;
+			animation: rotate 5s infinite linear;
+		}
+
+		/*
+		#btn1 {
+			background: #f00;
+		}
+
+		#btn2 {
+			background: #0f0;
+		}
+
+		#btn3 {
+			background: #00f;
+		}
+
+		#btn4 {
+			background: #ff0;
+		}*/
+
+		#main div:hover {
+			background: #fff;
+		}
+
+		#main {
+			animation: rotate 10s infinite linear;
+		}
+
+		@keyframes rotate{
+			0%{
+				transform: rotate(0deg);
+			}
+			100%{
+				transform: rotate(360deg);
+			}
+		}
+
+	</style>
+</head>
+<body>
+	<div id="main">
+		<div id="btn1" class="button">
+			<div class="black"></div>
+		</div>
+		<div id="btn2" class="button">
+			<div class="black"></div>
+		</div>
+		<div id="btn3" class="button">
+			<div class="black"></div>
+		</div>
+		<div id="btn4" class="button">
+			<div class="black"></div>
+		</div>
+
+
+	</div>
+
+</body>
+</html>
