@@ -1,0 +1,205 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>playback07</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			width: 300px;
+			margin: auto;
+		}
+
+		.button {
+			width: 100px;
+			height: 100px;
+			float: left;
+			margin: 15px;
+			color: black;
+			display: flex;
+			background: #ccc;
+			border: #555 3px solid;
+		}
+
+	
+		/* 
+		.btn1 instead of #btn1 so we can add .blink later
+		and have it work (class can't override id formatting)
+		*/
+		.btn1 {
+			background: #ff0066;
+		}
+
+		.btn2 {
+			background: #00ffff;
+		}
+		.btn3 {
+			background: #80ff00;
+		}
+		.btn4 {
+			background: #ffff00;
+		}
+
+		#main div:hover {
+			background: #fff;
+		}
+
+		#main div:active {
+			background: #111;
+		}
+
+		#header {
+			width: 200px;
+		}
+
+		.blink {
+			background: #fff;
+		}
+
+		#play {
+			width: 100px;
+			height: 25px;
+			background: #fff;
+			color: #000;
+			margin: 5px;
+			text-align: center;
+			padding-top: 10%;
+			padding-bottom: 10%;
+		}
+
+		#play:hover {
+			color: #fff;
+			background: #444;
+		}
+
+		.spinny {
+			animation: spin .25s linear;
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(180deg);
+			}
+		}
+
+	</style>
+</head>
+<body>
+	<div id="header">
+		<h1>Look at the console</h1>
+		<p>Auto-choose  a few buttons. If the user picks the correct buttons, there's a match.</p>
+		<p>Each auto-chosen button will blink white for an instant then return it to its normal color.</p>
+		<p>Adding button to play again.</p>
+
+		<div id="play" onclick="replay()">Play again</div>
+		<p>adding spin on click</p>
+	</div>
+	<br class="endFloat" />
+	<div id="main">
+		<div id="btn1" class="button btn1" onclick="clicky(this)">
+		1
+		</div>
+		<div id="btn2" class="button btn2" onclick="clicky(this)">
+			2
+		</div>
+		<div id="btn3" class="button btn3" onclick="clicky(this)">
+			3
+		</div>
+		<div id="btn4" class="button btn4" onclick="clicky(this)">
+			4
+		</div>
+
+
+	</div>
+
+
+
+<script>
+	
+	// array of buttons that can be pushed
+	var options = ["btn1", "btn2", "btn3", "btn4"];
+
+	var delay = 1000; // ms: blink duration
+	var count = 3; // how many buttons to choose
+	
+	var guesses = count; // how many guesses remaining
+	var target = ""; // text IDs of the buttons we want the user to guess
+	var index = []; // the IDs in the order we want the user to guess them, as an array
+	
+
+	// randomly pick a few buttons to push
+	// https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
+	var i = 0;
+	function blink() {
+		index[i] = Math.floor(Math.random()*options.length);
+		target += options[index[i]];
+		console.log(target);
+		console.log(index);
+
+		var blinker = document.getElementById(options[index[i]]);
+		blinker.classList.add("blink");
+
+		i++;
+		if( i < count){
+			setTimeout(blink, delay);
+		}
+		setTimeout(removeBlink, delay/2, blinker);
+	}
+	blink();
+
+	
+	var chosen = "";
+	function clicky(e){
+		// add spinny
+		spinner = document.getElementById(e.id);
+		spinner.classList.add("spinny");
+
+		guesses--;
+		chosen += e.id;
+		console.log(chosen);
+		// if the user correctly clicks the chosen buttons, they win
+		if (chosen == target){
+			console.log('match');
+		} else if (guesses == 0){
+			console.log('fail');
+		}
+
+		// remove spinny
+		var t = setTimeout(function(){spinner.classList.remove("spinny")}, 250);
+	}
+
+	function removeBlink(element){
+		element.classList.remove("blink");
+	}
+
+	function replay(){
+		chosen = "";
+		target = "";
+		guesses = count;
+		index = [];
+		i = 0;
+		blink();
+	}
+
+</script>
+
+</body>
+</html>
