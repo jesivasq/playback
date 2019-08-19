@@ -29,19 +29,18 @@
 			border: 1px solid white;
 			background: pink;
 			position: absolute;
-			//animation: confetti 2s linear infinite;
+			z-index: -100;
 		}
 
 		@keyframes confettiTwirl {
 			100% {
 				transform: rotateY(3600deg) rotateX(1800deg) rotateZ(180deg);
-				//margin-top: 900px;
 			}
 		}
 
 		@keyframes confettiFall {
 			100% {
-				margin-top: 100vh;
+				margin-top: 105vh;
 			}
 		}
 
@@ -58,21 +57,46 @@
 
 
 <script type="text/javascript">
+// based on: the rain example, cloudinary
+// https://cloudinary.com/blog/creating_html5_animations
+	
+	var numConfetti = 100; // number of confetti to fall
 	var container = document.getElementById("container");
-	for(var i = 0; i<100; i++){
-		var diva = document.createElement("div");
-		diva.setAttribute("id", "confetti"+i);
-		diva.setAttribute("class", "confetti");
-		container.appendChild(diva);
 
-		var confetto = document.getElementById("confetti" + i);
+	makeConfetti();
+	var t = setTimeout(removeConfetti, 11000);
 
-		var x = Math.floor(100 * Math.random());
-		var y = Math.floor(100 * Math.random());
-		var z = Math.floor(10 * Math.random()+1);
-		confetto.setAttribute("style", "margin-left: " + x + "vw; margin-top: -" + y + "vh; animation: confettiTwirl " + z + "s linear infinite, confettiFall " + z/.9 + "s linear infinite;");
+	// make a bunch of tiny divs tumble down from above
+	function makeConfetti(){
+		for(var i = 0; i<numConfetti; i++){
+			var diva = document.createElement("div");
+			diva.setAttribute("id", "confetti"+i);
+			diva.setAttribute("class", "confetti");
+			container.appendChild(diva);
+
+			var confetto = document.getElementById("confetti" + i);
+			// x for the horizontal position
+			// y for the starting height
+			// z for the number of seconds it'll spin
+			// zz for the number of seconds it'll take to fall
+			var x = Math.floor(100 * Math.random());
+			var y = Math.floor(50 * Math.random());
+			var z = Math.floor(7 * Math.random()+3);
+			var zz = Math.floor(7 * Math.random()+3);
+			confetto.setAttribute("style", "margin-left: " + x + "vw; margin-top: -" + y + "vh; animation: confettiTwirl " + z + "s linear infinite, confettiFall " + zz + "s linear forwards;");
+		}
 	}
 
+
+	// remove all the confetti divs so we can call the confetti function again later
+	function removeConfetti(){
+		for( var i = 0; i < numConfetti; i++){
+			var confetto = document.getElementById("confetti" + i);
+			container.removeChild(confetto);
+		}
+	}
+
+	
 
 </script>
 </body>
