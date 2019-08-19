@@ -24,14 +24,14 @@
 		}
 
 		#main {
-			width: 240px;
+			width: 440px;
 			margin: auto;
 			animation: rotate 15s ease-in-out infinite alternate;
 		}
 
 		.button {
-			width: 100px;
-			height: 100px;
+			width: 200px;
+			height: 200px;
 			float: left;
 			margin: 5px;
 			color: black;
@@ -173,9 +173,9 @@
 	<div id="level-holder">
 		<h1 id="level">Level 1</h1>
 	</div>
-	<div id="stage-holder">
+	<!--<div id="stage-holder">
 		<h1 id="stage">Stage 1</h1>
-	</div>
+	</div> -->
 
 
 
@@ -252,7 +252,7 @@
 			playTone("increase");
 			delay *= 0.9;
 			stage++;
-			document.getElementById("stage").innerHTML = "Stage " + stage;
+			//document.getElementById("stage").innerHTML = "Stage " + stage;
 			makeConfetti();
 			var t = setTimeout(removeConfetti, 11000);
 
