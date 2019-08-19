@@ -1,0 +1,79 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>confetti</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		.confetti {
+			width: 10px;
+			height: 10px;
+			border: 1px solid white;
+			background: pink;
+			position: absolute;
+			//animation: confetti 2s linear infinite;
+		}
+
+		@keyframes confettiTwirl {
+			100% {
+				transform: rotateY(3600deg) rotateX(1800deg) rotateZ(180deg);
+				//margin-top: 900px;
+			}
+		}
+
+		@keyframes confettiFall {
+			100% {
+				margin-top: 100vh;
+			}
+		}
+
+
+	</style>
+</head>
+<body>
+	<div id="container">
+		
+
+	</div>
+
+
+
+
+<script type="text/javascript">
+	var container = document.getElementById("container");
+	for(var i = 0; i<100; i++){
+		var diva = document.createElement("div");
+		diva.setAttribute("id", "confetti"+i);
+		diva.setAttribute("class", "confetti");
+		container.appendChild(diva);
+
+		var confetto = document.getElementById("confetti" + i);
+
+		var x = Math.floor(100 * Math.random());
+		var y = Math.floor(100 * Math.random());
+		var z = Math.floor(10 * Math.random()+1);
+		confetto.setAttribute("style", "margin-left: " + x + "vw; margin-top: -" + y + "vh; animation: confettiTwirl " + z + "s linear infinite, confettiFall " + z/.9 + "s linear infinite;");
+	}
+
+
+</script>
+</body>
+</html>
