@@ -1,0 +1,65 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>move_ball</title>
+
+	<!-- starting with code from -->
+	<!-- http://jsfiddle.net/9h261pzo/291/ -->
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		p {
+			padding-left:60px;
+		}
+		#foo{
+			border-radius:50px;
+			width:50px;
+			height:50px;
+			background:#c00;
+			position:absolute;
+			top:0;
+			left:0; 
+			transition: transform 1s;  
+		}
+
+	</style>
+</head>
+<body>
+	
+	<p>Click anywhere to move the ball</p>
+	<div id="foo"></div>
+
+
+
+
+
+
+<script type="text/javascript">
+	var f = document.getElementById('foo');
+	document.addEventListener('click', function(ev){
+	    f.style.transform = 'translateY('+(ev.clientY-25)+'px)';
+	    f.style.transform += 'translateX('+(ev.clientX-25)+'px)';
+	},false);    
+
+
+</script>
+</body>
+</html>

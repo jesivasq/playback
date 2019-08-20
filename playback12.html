@@ -63,11 +63,17 @@
 
 		.btn4 {
 			background: #ffea00;
+			border-bottom-right-radius: 50%;
 		}
 
 
+		/*// for harder levels
+		.button{
+			background: #ccc;
+		}*/
+
 		.button:hover{
-			animation: spin .15s linear;
+			animation: spin .5s linear;
 		}
 
 		.button:active{
@@ -106,8 +112,17 @@
 		
 
 		@keyframes spin {
-			to {
-				transform: rotateY(180deg);
+			0% {
+				transform: rotate(0deg);
+			}
+			20% {
+				transform: rotate(5deg);
+			}
+			60% {
+				transform: rotate(-5deg);
+			}
+			100% {
+				transform: rotate(0deg);
 			}
 		}
 
