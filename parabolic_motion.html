@@ -1,0 +1,78 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>parabolicMotion</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#foo{
+			border-radius:50px;
+			width:50px;
+			height:50px;
+			background:#0cc;
+			position:absolute;
+			top:50vh;
+			left:50vw;  
+			animation: upAndDown 3s ease-in-out, glideRight 3s linear;
+		}
+
+		/*#container{
+			animation: glideRight 3s linear;
+		}*/
+
+		@keyframes upAndDown {
+			0%{
+				transform: translate(0px);
+			}
+
+			30%{
+				transform: translateY(-50vh);
+			}
+			100%{
+				transform: translateY(105vh);
+			}
+		}
+
+		@keyframes glideRight {
+			100%{
+				transform: translateX(50vw);
+			}
+		}
+
+
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="foo"></div>
+	</div>
+
+
+
+
+
+<script type="text/javascript">
+	
+
+
+</script>
+</body>
+</html>

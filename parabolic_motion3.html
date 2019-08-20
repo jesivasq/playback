@@ -1,0 +1,125 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>parabolicMotion</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			margin: auto;
+		}
+
+		.particle {
+			width: 10px;
+			height: 10px;
+			position: absolute;
+			background: cyan;
+			border-radius: 50%;
+		}
+
+
+
+
+	</style>
+</head>
+<body>
+
+	<div id="main">
+		
+	</div>
+
+
+
+
+
+
+<script type="text/javascript">
+	// following along with http://cssdeck.com/labs/html5-canvas-fountain-exploding-particles-with-gravity
+	// except without a canvas...
+	// okay, maybe this instead: https://codepen.io/ShawnCG/pen/ZYVada
+
+	var W = window.innerWidth;
+	console.log(W);
+	var H = window.innerHeight;
+	var gravity = 0.5;
+	var particleCount = 100;
+	var particles = [];
+	var particleDivs = [];
+	var color = 'rgb(255,0,0)';
+
+	function Particle(){
+		this.radius = 5;
+		this.x = W/2;
+		this.y = H/2;
+		this.color = color;
+
+		// random initial velocities
+		this.vx = Math.random() * 12 - 6;
+		this.vy = Math.random() * -14 - 7;
+	}
+
+	for( var i = 0; i < particleCount; i++ ){
+		var particle = new Particle();
+		particles.push(particle);
+	}
+
+	for( var i = 0; i < particleCount; i++ ){
+		diva = document.createElement("div");
+		diva.classList.add("particle");
+		diva.setAttribute("id", "particle"+i);
+		document.getElementById("main").appendChild(diva);
+		particleDivs.push(diva);
+	}
+
+	console.log(particleDivs);
+
+	for( var i = 0; i < particleCount; i++){
+		particleDivs[i].style.left = particles[i].x + "px";
+	}
+	
+	var start = null;
+
+	function moveIt(timestamp){
+		if(!start) start = timestamp;
+		var progress = timestamp - start;
+		for( var i = 0; i < particleCount; i++){
+			particles[i].vy += gravity;
+			particles[i].x += particles[i].vx;
+			particles[i].y += particles[i].vy;
+			particleDivs[i].style.left = particles[i].x + "px";
+			particleDivs[i].style.top = particles[i].y + "px";
+			// particleDivs[i].style.transform = "translate(" +particles[i].x + "px, " + particles[i].y + "px)";
+		}
+		if( progress < 2000){
+			window.requestAnimationFrame(moveIt);
+		} else {
+			for(var j = 0; j < particleCount; j++){
+				diva = document.getElementById("particle" + j)
+				document.getElementById("main").removeChild(diva);
+			}
+		}
+		
+	}
+	window.requestAnimationFrame(moveIt);
+
+</script>
+</body>
+</html>

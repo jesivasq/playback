@@ -1,0 +1,118 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>parabolicMotion</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			margin: auto;
+		}
+
+		.particle {
+			width: 10px;
+			height: 10px;
+			position: absolute;
+			background: pink;
+		}
+
+
+
+	</style>
+</head>
+<body>
+
+	<div id="main">
+		
+	</div>
+
+
+
+
+
+
+<script type="text/javascript">
+	// following along with http://cssdeck.com/labs/html5-canvas-fountain-exploding-particles-with-gravity
+	// except without a canvas...
+	// okay, maybe this instead: https://codepen.io/ShawnCG/pen/ZYVada
+
+	var W = window.innerWidth;
+	console.log(W);
+	var H = window.innerHeight;
+	var gravity = 0.5;
+	var particleCount = 20;
+	var particles = [];
+	var color = 'rgb(255,0,0)';
+
+	function Particle(){
+		this.radius = 5;
+		this.x = W/2;
+		this.y = H - this.radius;
+		this.color = color;
+
+		// random initial velocities
+		this.vx = Math.random() * 4 - 2;
+		this.vy = Math.random() * -14 - 7;
+	}
+
+	for( var i = 0; i < particleCount; i++ ){
+		var particle = new Particle();
+		particles.push(particle);
+	}
+
+	for( var i = 0; i < 10; i++ ){
+		diva = document.createElement("div");
+		diva.classList.add("particle");
+		document.getElementById("main").appendChild(diva);
+		//setInterval(moveLeft, 100, diva);
+		moveLeft(diva);
+	}
+
+	function moveLeft(element){
+		//https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style
+		// elementStyle = element.style;
+
+		// console.log(elementStyle["left"]);
+		computedStyle = window.getComputedStyle(element, null);
+		console.log(computedStyle["left"]);
+		myString = computedStyle["left"];
+		myString = myString.replace("px", "");
+		console.log(myString);
+		console.log(parseInt(myString, 10));
+
+		var x = parseInt(myString, 10);
+
+		//setInterval(moveLeftBy5, 50, element);
+
+	}
+
+	function moveLeftBy5(element){
+		computedStyle = window.getComputedStyle(element, null);
+
+		var curX = parseInt(computedStyle["left"].replace("px",""), 10);
+		element.style.left = (curX - 5) + "px";
+	}
+
+
+
+</script>
+</body>
+</html>
