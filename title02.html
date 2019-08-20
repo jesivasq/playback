@@ -241,8 +241,10 @@
 <script type="text/javascript">
 	function startGame(){
 		console.log("start");
+		// hide the title screen
 		document.getElementById("setup").style.display = "none";
 		
+		// then set display on stage1 to block and ease it in
 		document.getElementById("level-holder").style.animation = "levelHolder 2s ease-out 0.5s both";
 		document.getElementById("level-holder").style.display = "block";
 
@@ -253,7 +255,7 @@
 		function startRotate(){
 			document.getElementById("main").style.animation = "rotate 15s ease-in-out alternate infinite";
 		}
-		// then set display on stage1 to block and ease it in
+		
 		// then start the game
 	}
 

@@ -1,0 +1,110 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>particle-fountain</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			margin: auto;
+		}
+
+		.particle {
+			width: 10px;
+			height: 10px;
+			position: absolute;
+			background: cyan;
+			border-radius: 50%;
+			border: 1px solid #555;
+		}
+
+	</style>
+</head>
+<body>
+
+	<div id="main">
+		
+	</div>
+
+<!--------------------------->
+<script type="text/javascript">
+	// following along with http://cssdeck.com/labs/html5-canvas-fountain-exploding-particles-with-gravity
+	// except without a canvas...
+	// okay, maybe this instead: https://codepen.io/ShawnCG/pen/ZYVada
+
+	var W = window.innerWidth;
+	var H = window.innerHeight;
+	console.log(H);
+	var gravity = 0.5;
+	var particleCount = 500;
+	var particles = [];
+	var particleDivs = [];
+	var colors = ["#f50057", "#00e5ff", "#76ff03", "#ffea00"];
+
+	function Particle(){
+		this.radius = 5;
+		this.x = W/2;
+		this.y = H/2;
+		this.color = colors[Math.floor(Math.random()*colors.length)];
+
+		// random initial velocities
+		this.vx = Math.random() * 12 - 6;
+		this.vy = Math.random() * -14 - 7;
+	}
+
+	for( var i = 0; i < particleCount; i++ ){
+		// create particle
+		var particle = new Particle();
+		particles.push(particle);
+
+		// create particle holder
+		diva = document.createElement("div");
+		diva.classList.add("particle");
+		document.getElementById("main").appendChild(diva);
+		particleDivs.push(diva);
+	}
+
+	//console.log(particleDivs);
+
+	function moveIt(timestamp){
+
+		for( var i = 0; i < particleCount; i++){
+			if(particles[i].y > H){
+				particles[i].x = W/2;
+				particles[i].y = H/2;
+				particles[i].vy = Math.random() * -14 - 7;
+			}
+			particles[i].vy += gravity;
+			particles[i].x += particles[i].vx;
+			particles[i].y += particles[i].vy;
+			
+			particleDivs[i].style.left = particles[i].x + "px";
+			particleDivs[i].style.top = particles[i].y + "px";
+			particleDivs[i].style.background = particles[i].color;
+			
+		}
+		window.requestAnimationFrame(moveIt);
+	}
+	window.requestAnimationFrame(moveIt);
+
+</script>
+</body>
+</html>
