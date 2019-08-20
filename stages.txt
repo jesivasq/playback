@@ -1,0 +1,5 @@
+Stage 1: all four colors, still
+Stage 2: all four colors, rotating
+Stage 3: two colors, rotating
+Stage 4: one color, rotating
+Stage 5: no color, rotating
