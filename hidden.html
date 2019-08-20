@@ -1,0 +1,79 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>hidden</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		.box {
+			height: 200px;
+			width: 200px;
+		}
+
+		#hide {
+			background: #f00;
+		}
+
+		#show {
+			background: #00f;
+		}
+
+		#inside {
+			background: #0aa;
+		}
+
+
+	</style>
+</head>
+<body>
+	
+<div id="hide" class="box">
+	This is some text
+	<div id="inside"><p>this is a div inside</p></div>
+</div>
+<div id="show" class="box">
+	This is some more text
+</div>
+<div id="buttons">
+	<button onclick="show()">Show</button>
+	<button onclick="hide()">Hide</button>
+</div>
+
+
+
+
+<script type="text/javascript">
+	function show(){
+		var myDiv = document.getElementById("hide");
+		myDiv.style.display = "block";
+		console.log(myDiv)
+	}
+
+	function hide(){
+		var myDiv = document.getElementById("hide");
+		myDiv.style.display = "none";
+		console.log(myDiv)
+	}
+
+
+</script>
+</body>
+</html>
