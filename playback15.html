@@ -1,0 +1,372 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>playback15</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			width: 440px;
+			margin: auto;
+			animation: rotate 15s ease-in-out infinite alternate;
+		}
+
+		.button {
+			width: 200px;
+			height: 200px;
+			float: left;
+			margin: 5px;
+			color: black;
+			display: flex;
+			background: #ccc;
+			border: #555 3px solid;
+			transition: background .25s;
+		}
+
+	
+		/* 
+		.btn1 instead of #btn1 so we can add .blink later
+		and have it work (class can't override id formatting)
+		*/
+		.btn1 {
+			background: #f50057;
+			border-top-left-radius: 50%;
+		}
+
+		.btn2 {
+			background: #00e5ff;
+			border-top-right-radius: 50%;
+		}
+
+		.btn3 {
+			background: #76ff03;
+			border-bottom-left-radius: 50%;
+		}
+
+		.btn4 {
+			background: #ffea00;
+			border-bottom-right-radius: 50%;
+		}
+
+
+		/*// for harder levels
+		.button{
+			background: #ccc;
+		}*/
+
+		.button:hover{
+			animation: spin .5s linear;
+		}
+
+		.button:active{
+			background: #fff;
+		}
+
+
+		.blink {
+			background: #fff;
+		}
+
+		#level-holder {
+			width:200px;
+			text-align:center;
+			position: absolute;
+		}
+
+		#score-holder {
+			width:200px;
+			text-align:center;
+			position: absolute;
+			right: 0;
+		}
+
+
+		.confetti {
+			width: 10px;
+			height: 10px;
+			border: 1px solid #555;
+			border-bottom-left-radius: 50%;
+			background: pink;
+			position: absolute;
+			z-index: -100;
+		}
+		
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+			20% {
+				transform: rotate(5deg);
+			}
+			60% {
+				transform: rotate(-5deg);
+			}
+			100% {
+				transform: rotate(0deg);
+			}
+		}
+
+		@keyframes rotate {
+			0%{
+				transform: rotate(45deg);
+			}
+			100% {
+				transform: rotate(405deg);
+			}
+		}
+
+		@keyframes fail {
+			100% {
+				transform: rotate(1800deg) scale(0);
+			}
+		}
+
+		@keyframes stage{
+			100% {
+				transform: translateX(0em);
+			}
+		}
+
+		@keyframes fadeText {
+			100% {
+				color: rgba(0, 0, 0, 0);
+			}
+		}
+
+
+
+		@keyframes confettiTwirl {
+			100% {
+				transform: rotateY(3600deg) rotateX(1800deg) rotateZ(180deg);
+			}
+		}
+
+		@keyframes confettiFall {
+			100% {
+				margin-top: 105vh;
+			}
+		}
+
+	</style>
+</head>
+<body id="container">
+	<div id="main">
+		<div id="btn1" class="button btn1" onclick="clicky(this)"></div>
+		<div id="btn2" class="button btn2" onclick="clicky(this)"></div>
+		<div id="btn3" class="button btn3" onclick="clicky(this)"></div>
+		<div id="btn4" class="button btn4" onclick="clicky(this)"></div>
+	</div> 
+
+	<div id="level-holder">
+		<h1 id="level" onclick="blinkAgain()">Level 1</h1>
+	</div>
+	<div id="score-holder">
+		<h1>High Score</h1>
+		<h1 id="highscore">0</h1>
+	</div>
+
+
+<script>
+	
+	// array of buttons that can be pushed
+	var options = ["btn1", "btn2", "btn3", "btn4"];
+
+	var delay = 800; // ms: blink duration
+	var count = 3; // how many buttons to choose
+	var level = 1;
+	var guesses = count; // how many guesses remaining
+	var target = ""; // text IDs of the buttons we want the user to guess
+	var index = []; // the IDs in the order we want the user to guess them, as an array
+	var stage = 1; // so the user knows when we have an increase in challenge
+	var numConfetti = 200; // number of confetti to fall
+	var container = document.getElementById("container");
+	// the colors of the four buttons, as of playback15
+	var colors = ["#f50057", "#00e5ff", "#76ff03", "#ffea00"];
+	var highscore = 0;
+
+	// randomly pick a few buttons to push	
+	function chooseButtons(){
+		for(var j = 0 ; j < count; j++){
+			index[j] = Math.floor(Math.random()*options.length);
+			target += options[index[j]];
+			console.log(target);
+		}
+	}
+	chooseButtons();
+
+
+	// https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
+	var i = 0;
+	function blink() {
+		
+		//console.log(index);
+
+		playTone(options[index[i]]);
+
+		var blinker = document.getElementById(options[index[i]]);
+		blinker.classList.add("blink");
+
+		i++;
+		if( i < count){
+			setTimeout(blink, delay);
+		}
+		setTimeout(removeBlink, delay/2, blinker);
+		
+	}
+	var ti = setTimeout(blink, 2000);
+	
+	var chosen = "";
+	function clicky(e){
+		// make that button's sound
+		playTone(e.id);
+
+		guesses--;
+		chosen += e.id;
+		console.log(chosen);
+
+		// if the user correctly clicks the chosen buttons, they win
+		if (chosen == target){
+			console.log('match');
+
+			// indicate that the user succeeded
+			playTone("chord");
+			for( var k = 0; k< options.length; k++){
+				blinker = document.getElementById(options[k]);
+				//console.log(blinker);
+				blinker.classList.add("blink");
+				setTimeout(removeBlink, 250, blinker);
+			}
+			
+			// trigger the next level
+			var playAgain = setTimeout(replay, 500);
+		} else if (guesses == 0){
+			var ti = setTimeout(fail, 500);
+		}
+	
+	}
+
+	function removeBlink(element){
+		element.classList.remove("blink");
+	}
+
+	// replay the current sequence
+	function blinkAgain(){
+		i = 0;
+		blink();
+
+	}
+
+	function replay(){
+		highscore = Math.max(highscore, level);
+		document.getElementById("highscore").innerHTML = highscore;
+		level++;
+		if ( level % 4 == 0 ){ 
+			count++;
+			playTone("increase");
+			delay *= 0.9;
+			stage++;
+			//document.getElementById("stage").innerHTML = "Stage " + stage;
+			makeConfetti();
+			var t = setTimeout(removeConfetti, 11000);
+
+		}
+
+		guesses = count;
+		chosen = "";
+		target = "";
+		index = [];
+		i = 0;
+		stage = 1;
+		
+		lvl = document.getElementById("level");
+		lvl.innerHTML = "Level " + level;
+		
+		chooseButtons();
+		var t = setTimeout(blink, 1500);
+	}
+
+	// from miniMusic:
+	// https://github.com/xem/miniMusic
+	function playTone(id){
+		if(id == "btn1"){
+			with(new AudioContext)[22].map((v,i)=>{with(createOscillator())v&&start(e=[1][i]*.2,connect(destination),frequency.setValueAtTime(440*1.06**(12-v),0)),stop(e+.2)})
+		} else if ( id == "btn2"){
+			with(new AudioContext)[18].map((v,i)=>{with(createOscillator())v&&start(e=[1][i]*.2,connect(destination),frequency.setValueAtTime(440*1.06**(12-v),0)),stop(e+.2)})
+		} else if(id == "btn3"){
+			with(new AudioContext)[15].map((v,i)=>{with(createOscillator())v&&start(e=[1][i]*.2,connect(destination),frequency.setValueAtTime(440*1.06**(12-v),0)),stop(e+.2)})
+		} else if(id == "btn4"){
+			with(new AudioContext)[10].map((v,i)=>{with(createOscillator())v&&start(e=[1][i]*.2,connect(destination),frequency.setValueAtTime(440*1.06**(12-v),0)),stop(e+.2)})
+		} else if(id == "increase"){
+			with(new AudioContext)[15,17,18,20,22].map((v,i)=>{with(createOscillator())v&&start(e=[5,4,3,2,1][i]*.1,connect(destination),frequency.setValueAtTime(440*1.06**(12-v),0)),stop(e+.1)})
+		} else if( id == "fail"){
+			with(new AudioContext)[11,15,18,22].map((v,i)=>{with(createOscillator())v&&start(e=[1,2,4,5][i]*.1,connect(destination),frequency.setValueAtTime(440*1.06**(12-v),0)),stop(e+.1)})
+		} else if( id == "chord"){
+			with(new AudioContext)[10,15,18].map((v,i)=>{with(createOscillator())v&&start(e=[1,1,1][i]*.2,connect(destination),frequency.setValueAtTime(440*1.06**(12-v),0)),stop(e+.2)})
+		}
+	}
+
+	function fail(){
+		console.log('fail');
+		document.getElementById("level").innerHTML ="fail";
+		playTone("fail");
+		document.getElementById("main").style.animation = "fail 2s ease-out forwards";
+	}
+
+	// based on: the rain example, cloudinary
+// https://cloudinary.com/blog/creating_html5_animations
+	
+	// make a bunch of tiny divs tumble down from above
+	function makeConfetti(){
+		for(var i = 0; i<numConfetti; i++){
+			var diva = document.createElement("div");
+			diva.setAttribute("id", "confetti"+i);
+			diva.setAttribute("class", "confetti");
+			container.appendChild(diva);
+
+			var confetto = document.getElementById("confetti" + i);
+			// x for the horizontal position
+			// y for the starting height
+			// z for the number of seconds it'll spin
+			// zz for the number of seconds it'll take to fall
+			// c for the color
+			var x = Math.floor(100 * Math.random());
+			var y = Math.floor(50 * Math.random());
+			var z = Math.floor(7 * Math.random()+3);
+			var zz = Math.floor(7 * Math.random()+3);
+			var c = Math.floor(colors.length * Math.random());
+			confetto.setAttribute("style", "margin-left: " + x + "vw; margin-top: -" + y + "vh; animation: confettiTwirl " + z + "s linear infinite, confettiFall " + zz + "s linear forwards; background: " + colors[c] + ";");
+		}
+	}
+
+
+	// remove all the confetti divs so we can call the confetti function again later
+	function removeConfetti(){
+		for( var i = 0; i < numConfetti; i++){
+			var confetto = document.getElementById("confetti" + i);
+			container.removeChild(confetto);
+		}
+	}
+
+</script>
+
+</body>
+</html>
