@@ -1,0 +1,116 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>stripes</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+			background: linear-gradient(#000 20%, #fff 50%);
+			background-size: 100% 30px;
+			border-radius:50%;
+			animation: rotate 45s linear reverse infinite;
+		}
+
+		#main {
+			//width: 250px;
+			margin: auto;
+		}
+
+		.button {
+			width: 200px;
+			height: 200px;
+			float: left;
+			margin: 5px;
+			background: rgba(255, 255, 255, .5);
+			animation: rotate 5s infinite linear reverse, spread 5s infinite ease-in-out alternate;
+			display: flex;
+		}
+
+		.black {
+			background: black;
+			width: 50%;
+			height: 50%;
+			margin: auto;
+			animation: rotate 5s infinite linear;
+		}
+
+
+		div.button:hover {
+			background: rgba(255, 255, 255, 1);
+		}
+
+		div.black:hover{
+			background: black;
+		}
+
+		#main {
+			animation: rotate 10s infinite linear;
+		}
+
+		@keyframes rotate{
+			0%{
+				transform: rotate(0deg);
+			}
+			100%{
+				transform: rotate(360deg);
+			}
+		}
+
+		@keyframes spread {
+			0%{
+				margin: -15px;
+			}
+			100%{
+				margin: 35px;
+			}
+		}
+
+
+	</style>
+</head>
+<body>
+	
+	<div id="main">
+		<div id="btn1" class="button">
+			<div class="black"></div>
+		</div>
+		<div id="btn2" class="button">
+			<div class="black"></div>
+		</div>
+		<div id="btn3" class="button">
+			<div class="black"></div>
+		</div>
+		<div id="btn4" class="button">
+			<div class="black"></div>
+		</div>
+
+
+	</div>
+
+
+
+
+
+<script type="text/javascript">
+	
+
+
+</script>
+</body>
+</html>
