@@ -40,7 +40,7 @@
 
 		@keyframes confettiFall {
 			100% {
-				margin-top: 105vh;
+				margin-top: 200vh;
 			}
 		}
 
@@ -80,9 +80,9 @@
 			// z for the number of seconds it'll spin
 			// zz for the number of seconds it'll take to fall
 			var x = Math.floor(100 * Math.random());
-			var y = Math.floor(50 * Math.random());
+			var y = Math.floor(120 * Math.random());
 			var z = Math.floor(7 * Math.random()+3);
-			var zz = Math.floor(7 * Math.random()+3);
+			var zz = Math.floor(15 * Math.random()+5);
 			confetto.setAttribute("style", "margin-left: " + x + "vw; margin-top: -" + y + "vh; animation: confettiTwirl " + z + "s linear infinite, confettiFall " + zz + "s linear infinite;");
 		}
 	}
