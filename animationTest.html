@@ -1,0 +1,110 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>animationTest</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			margin: auto;
+
+		}
+
+		#main div {
+			background: white;
+			width: 15px;
+			height: 15px;
+			position: absolute;
+			top: -10vh;
+		}
+
+		@keyframes slideDown{
+			from{
+				transform: translateY(0) rotateY(0) rotateX(0);
+			}
+			to{
+				transform: translateY(150vh) rotateY(3600deg) rotateX(2100deg);
+			}
+		}
+
+
+	</style>
+</head>
+<body onclick="animationStop()">
+	
+<div id="main">
+	
+</div>
+
+
+
+
+<!----------------------------->
+<script type="text/javascript">
+	var colors = ["#f50057", "#00e5ff", "#76ff03", "#ffea00"];
+	main = document.getElementById("main");
+	makeMore = true;
+
+	for(var i = 0; i < 500 ; i++){
+		makeDiv();
+	}
+	
+
+	function makeDiv(){
+		x = Math.random()*window.innerWidth;
+		y = Math.random()*-50;
+		c = colors[Math.floor(colors.length * Math.random())];
+
+		diva = document.createElement("div");
+
+		diva.style.left = x + "px";
+		diva.style.top = y + "vh";
+		diva.style.background = c;
+		main.appendChild(diva);
+		diva.addEventListener("animationend", animationEnded);
+		animate(diva);
+	}
+
+	
+
+	function animate(element){
+		var t = Math.random()*15 + 1;
+		element.style.animation = "slideDown " + t + "1s linear";
+	}
+
+	function animationEnded(){
+		console.log(event);
+		document.getElementById("main").removeChild(event.target);
+		if(makeMore){
+			makeDiv();
+		}
+		
+	}
+
+	function animationStop(){
+		makeMore = false;
+	}
+
+
+
+</script>
+</body>
+</html>
