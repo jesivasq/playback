@@ -1,0 +1,104 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>bubbles1</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#container{
+			margin: auto;
+			width: 50px;
+			height: 50px;
+			animation: rotateBubble 5s linear infinite;
+		}
+
+		#outer {
+			margin: auto;
+			animation: raiseBubble 25s ease-in forwards;
+		}
+
+		.bubble {
+			//margin: auto;
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			border: 3px solid rgba(255, 255, 255, 0.5);
+			background: black;
+		}
+
+		@keyframes rotateBubble {
+			from{
+				transform: rotate(0deg);
+			}
+			to{
+				transform: rotate(360deg);
+			}
+		}
+
+		@keyframes raiseBubble { 
+			from{
+				transform: translateY(0);
+			}
+			to{
+				transform: translateY(-100vh);
+			}
+		}
+
+
+	</style>
+</head>
+<body>
+	
+	<div id="outer">
+		<div id="container">
+			
+		</div>
+	</div>
+
+
+
+
+<!---------------------------->
+<script type="text/javascript">
+	var W = window.innerWidth;
+	var H = window.innerHeight;
+
+	var diva = document.createElement("div");
+	diva.classList.add("bubble");
+	document.getElementById("container").appendChild(diva);
+
+	var x, y;
+	var angle = 0;
+
+	function goAround(){
+		angle++;
+		x += Math.sin(angle) + 10;
+		y += Math.cos(angle) + 10;
+
+	}
+
+	function displayBubble(){
+
+	}
+
+</script>
+</body>
+</html>

@@ -94,7 +94,7 @@
 
 
 	function Particle(){
-		this.radius = 5;
+		this.radius = 2 + Math.random()*8;
 		this.x = W/2;
 		this.y = H/2;
 		this.color = colors[Math.floor(Math.random()*colors.length)];
@@ -104,9 +104,23 @@
 		this.vy = Math.random() * 12 - 6;
 
 		// no zero velocities
-		if( Math.abs(this.vx) < 1){ this.vx = 1;}
-		if( Math.abs(this.vy) < 1){ this.vy = 1;}
+		// if( Math.abs(this.vx) < 1){ 
+		// 	if(this.vx < 0){
+		// 		this.vx = -1;
+		// 	} else {
+		// 		this.vx = 1;
+		// 	}
+		// }
+		// if( Math.abs(this.vy) < 1){ 
+		// 	if(this.vy < 0){
+		// 		this.vy = -1;
+		// 	} else {
+		// 		this.vy = 1;
+		// 	}
+			
+		// }
 		// this makes an aweseome, if accidental, 4-way divide
+		// makes it so all our particles will clear the screen in a reasonable amount of time
 
 	}
 
@@ -145,6 +159,11 @@
 				}
 			// if they're not offscreen, keep moving them
 			} else {
+				if(stopped){
+					//get'em offscreen faster
+					particles[i].vx*=1.2;
+					particles[i].vy*=1.2;
+				}
 				particles[i].vy += gravity;
 				particles[i].x += particles[i].vx;
 				particles[i].y += particles[i].vy;
@@ -152,10 +171,13 @@
 				particleDivs[i].style.left = particles[i].x + "px";
 				particleDivs[i].style.top = particles[i].y + "px";
 				particleDivs[i].style.background = particles[i].color;
+				particleDivs[i].style.width = 2* particles[i].radius + "px";
+				particleDivs[i].style.height = 2* particles[i].radius + "px";
 			}
 		}
 		// for our pause button
 		if(foo){window.requestAnimationFrame(moveIt);}
+		console.log("frame");
 	}
 	
 	
@@ -176,11 +198,13 @@
 
 	// beginning state
 	function reset(){
+		foo = false;
 		document.getElementById("main").innerHTML = "";
 		particleCount = 500;
 		particles = [];
 		particleDivs = [];
-		stopped = false;
+		//stopped = false;
+		
 	}
 
 	// call the functions to make and animate particles
@@ -193,6 +217,8 @@
 
 	function stop(){
 		stopped = true;
+		setTimeout(pause,2000);
+		//setTimeout(reset,2050);
 	}
 
 </script>
