@@ -166,6 +166,8 @@ function playTone(id){
 		with(new AudioContext)[11,15,18,22].map((v,i)=>{with(createOscillator())v&&start(e=[1,2,4,5][i]*.1,connect(destination),frequency.setValueAtTime(440*1.06**(12-v),0)),stop(e+.1)})
 	} else if( id == "chord"){
 		with(new AudioContext)[10,15,18].map((v,i)=>{with(createOscillator())v&&start(e=[1,1,1][i]*.2,connect(destination),frequency.setValueAtTime(440*1.06**(12-v),0)),stop(e+.2)})
+	} else if( id=="daffodil"){
+		with(new AudioContext)[13,13,13,13,13,13,15,15,15,15,15,15,15,15,15,17,17,17,17,17,17,18,18,18,18,20,22,22,22,22,22,22,22].map((v,i)=>{with(createOscillator())v&&start(e=[7,9,10,19,21,22,1,6,11,13,18,23,25,27,28,12,24,29,31,33,34,2,4,30,35,36,14,15,16,37,38,39,40][i]*.2,connect(destination),frequency.setValueAtTime(440*1.06**(12-v),0)),stop(e+.2)});
 	}
 }
 
@@ -176,6 +178,8 @@ function fail(){
 	document.getElementById("main").style.animation = "fail .5s linear forwards";
 	//document.getElementById("main").style.display = "none";
 	//document.getElementById("main").style.animation = "paused";
+	document.getElementById("playAgain").style.display = "block";
+	document.getElementById("playAgain").style.animation = "upFromBelow 3s ease-out 1s both";
 }
 
 // based on: the rain example, cloudinary

@@ -31,7 +31,7 @@ body {
 	margin: 0px;
 }
 
-#setup ul {
+/*#setup ul {
 	list-style: none;
 }
 
@@ -44,7 +44,7 @@ body {
 #setup ul li:hover {
 	background: #fff;
 	color: #000;
-}
+}*/
 
 #P {
 	animation: rotateLetter 5s ease-out;
@@ -173,6 +173,14 @@ mix up the button colors in later stages
 	background: pink;
 	position: absolute;
 	z-index: -100;
+}
+
+#playAgain	{
+	display: none;
+	position: absolute;
+	margin-left: 40vw;
+	margin-top: 25vh;
+	text-align: center;
 }
 
 button{

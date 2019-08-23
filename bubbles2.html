@@ -1,0 +1,124 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>bubbles2</title>
+
+	<style>
+		html {
+			background: linear-gradient(#00e5ff, #00b2cc);
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		.inner{
+			margin: auto;
+			width: 50px;
+			height: 50px;
+			animation: rotateBubble 5s linear infinite;
+		}
+
+		.outer {
+			margin: auto;
+			position: absolute;
+		}
+
+		.bubble {
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			border: 3px solid rgba(255, 255, 255, 0.5);
+		}
+
+		@keyframes rotateBubble {
+			from{
+				transform: rotate(0deg);
+			}
+			to{
+				transform: rotate(360deg);
+			}
+		}
+
+		@keyframes raiseBubble { 
+			to{
+				transform: translateY(-200vh);
+			}
+		}
+
+
+	</style>
+</head>
+<body>
+	
+	<div id="container">
+		
+	</div>
+
+
+
+
+<!---------------------------->
+<script type="text/javascript">
+	var container = document.getElementById("container");
+	var makeMoreBubbles = true;
+
+
+	for(i=0; i<50; i++){
+		makeBubble();
+	}
+
+	function makeBubble(){
+		x = Math.random()*window.innerWidth;
+		y = Math.random()*100;
+
+		outer = document.createElement("div");
+		outer.classList.add("outer");
+		outer.style.left = x + "px";
+		outer.style.top = (y + 100) + "vh";
+
+		inner = document.createElement("div");
+		inner.classList.add("inner");
+
+		diva = document.createElement("div");
+		diva.classList.add("bubble");
+
+		inner.appendChild(diva);
+		outer.appendChild(inner);
+		container.appendChild(outer);
+
+		outer.addEventListener("animationend", endAnimateBubble);
+		animateBubble(outer);
+	}
+
+	function animateBubble(element){
+		var t = Math.random()*20 + 10;
+		element.style.animation = "raiseBubble " + t + "s ease-in forwards";
+	}
+
+	function endAnimateBubble(){
+		//console.log(event.target);
+		container.removeChild(event.target);
+		if(makeMoreBubbles){
+			makeBubble();
+		}
+	}
+
+	function stopMakingBubbles(){
+		makeMoreBubbles = false;
+	}
+
+</script>
+</body>
+</html>

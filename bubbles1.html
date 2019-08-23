@@ -8,7 +8,7 @@
 
 	<style>
 		html {
-			background: black;
+			background: #BBDEFB;
 			padding:0px;
 			margin:0px;
 			font-family: sans-serif;
@@ -41,7 +41,6 @@
 			height: 10px;
 			border-radius: 50%;
 			border: 3px solid rgba(255, 255, 255, 0.5);
-			background: black;
 		}
 
 		@keyframes rotateBubble {
@@ -78,26 +77,14 @@
 
 <!---------------------------->
 <script type="text/javascript">
-	var W = window.innerWidth;
-	var H = window.innerHeight;
 
 	var diva = document.createElement("div");
 	diva.classList.add("bubble");
 	document.getElementById("container").appendChild(diva);
 
-	var x, y;
-	var angle = 0;
+	
 
-	function goAround(){
-		angle++;
-		x += Math.sin(angle) + 10;
-		y += Math.cos(angle) + 10;
 
-	}
-
-	function displayBubble(){
-
-	}
 
 </script>
 </body>
