@@ -1,0 +1,178 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>particle-fountain6</title>
+
+	<style>
+		html {
+			background: #101f27;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			margin: auto;
+		}
+
+		.particle {
+			width: 10px;
+			height: 10px;
+			position: absolute;
+			background: cyan;
+			border-radius: 50%;
+			border: 1px solid #555;
+		}
+		#btn {
+			background: white;
+			position: absolute;
+			color: black;
+			text-align: center;
+		}
+
+		#btn div {
+			width: 100px;
+			height: 50px;
+			border: 1px solid black;
+		}
+
+	</style>
+</head>
+<body>
+
+	<div id="main">
+		
+	</div>
+	<div id="btn">
+		<div onclick="startParticles()">START</div>
+		<div onclick="stopParticles()">STOP</div>
+	</div>
+
+<!--------------------------->
+<script type="text/javascript">
+	// following along with http://cssdeck.com/labs/html5-canvas-fountain-exploding-particles-with-gravity
+	// except without a canvas...
+	// okay, maybe this instead: https://codepen.io/ShawnCG/pen/ZYVada
+
+	var W = window.innerWidth;
+	var H = window.innerHeight;
+
+	var gravity = 0.0; // no gravity = zooms out radially
+	var particleCount = 500;
+	var particles = [];
+	var particleDivs = [];
+	var colors = ["#f50057", "#00e5ff", "#76ff03", "#ffea00"];
+
+	var keepMovingParticles = true;
+	var particlesStopped = false;
+
+
+	function Particle(){
+		this.radius = 2 + Math.random()*8;
+		this.x = window.innerWidth/2;
+		this.y = window.innerHeight/2;
+		this.color = colors[Math.floor(Math.random()*colors.length)];
+
+		// random initial velocities
+		this.vx = Math.random() * 12 - 6;
+		this.vy = Math.random() * 12 - 6;
+	}
+
+	function createParticles(){
+		for( var i = 0; i < particleCount; i++ ){
+			// create particle
+			var particle = new Particle();
+			particles.push(particle);
+
+			// create particle holder
+			diva = document.createElement("div");
+			diva.classList.add("particle");
+			document.getElementById("main").appendChild(diva);
+			particleDivs.push(diva);
+		}
+
+	}
+	
+
+	function moveParticles(timestamp){
+
+		for( var i = 0; i < particleCount; i++){
+			// check to see if they're off screen
+			if(particles[i].y > window.innerHeight || particles[i].y < 0 || particles[i].x > window.innerWidth || particles[i].x < 0){
+				// if they're offscreen but we're not stopped, reposition them to center
+				if(!particlesStopped){
+					particles[i].x = window.innerWidth/2;
+					particles[i].y = window.innerHeight/2;
+					particles[i].vy = Math.random() * 12 - 6;
+				} else {
+					// if they're offscreen and we're stopped, remove them
+					document.getElementById("main").removeChild(particleDivs[i]);
+					particleDivs.splice(i,1);
+					particles.splice(i,1);
+					particleCount--;
+				}
+			// if they're not offscreen, keep moving them
+			} else {
+				if(particlesStopped){
+					//get'em offscreen faster
+					particles[i].vx*=1.2;
+					particles[i].vy*=1.2;
+				}
+				particles[i].vy += gravity;
+				particles[i].x += particles[i].vx;
+				particles[i].y += particles[i].vy;
+				
+				particleDivs[i].style.left = particles[i].x + "px";
+				particleDivs[i].style.top = particles[i].y + "px";
+				particleDivs[i].style.background = particles[i].color;
+				particleDivs[i].style.width = 2* particles[i].radius + "px";
+				particleDivs[i].style.height = 2* particles[i].radius + "px";
+			}
+		}
+		if(keepMovingParticles){
+			window.requestAnimationFrame(moveParticles);
+			console.log("moveParticles");
+		}
+		
+	}
+	
+
+	// beginning state
+	function resetParticles(){
+		document.getElementById("main").innerHTML = "";
+		particleCount = 500;
+		particles = [];
+		particleDivs = [];
+		console.log("reset");	
+	}
+
+	// call the functions to make and animate particles
+	function startParticles(){
+		resetParticles();
+		particlesStopped = false;
+		keepMovingParticles = true;
+		createParticles();
+		window.requestAnimationFrame(moveParticles);
+		console.log("start");
+	}
+
+	function stopParticles(){
+		particlesStopped = true;
+		setTimeout(function(){keepMovingParticles = false; console.log("stopped");}, 1000);
+	}
+
+</script>
+</body>
+</html>
