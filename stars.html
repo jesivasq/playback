@@ -1,0 +1,137 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>stars</title>
+
+	<style>
+		html {
+			background: #101f27;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		@keyframes twinkle{
+			0%{
+				opacity: 0.9;
+			}
+			70% {
+				opacity: 0.1;
+			}
+			100%{
+				opacity: 0.9;
+			}
+
+		}
+
+		@keyframes fadeIn{
+			from{
+				opacity: 0;
+			}
+		}
+
+
+		@keyframes fadeOut{
+			to{
+				opacity: 0;
+			}
+		}
+
+		.star {
+			position:absolute;
+			width: 50px;
+			height: 50px;
+			background: white;
+			border-radius: 50%;
+			z-index: -100;
+		}
+
+
+
+	</style>
+</head>
+<body id="container" onclick="ss.fadeOut()">
+	
+
+
+
+
+
+<script type="text/javascript">
+	var container = document.getElementById("container");
+
+
+	class Star{
+		constructor(x,y){
+			this.x = x;
+			this.y = y;
+			this.r = Math.random()*10 + 1; // radius
+			this.t = Math.random()*10 + 1; // time to delay fade in
+
+			this.diva = document.createElement("div");
+			this.diva.classList.add("star");
+			this.diva.style.left = this.x + "px";
+			this.diva.style.top = this.y + "px";
+			this.diva.style.width = this.r + "px";
+			this.diva.style.height = this.r + "px";
+		}
+
+	}
+
+	class StarSystem{
+		constructor(parent){
+			this.numStars = 100;
+			this.starArray = [];
+
+			const twinkle = (e) => {
+				e.target.style.animation = "twinkle " + (Math.random()*10 + 5) + "s infinite";
+			}
+
+			for(var i = 0 ; i < this.numStars; i++){
+				var x = Math.random()*window.innerWidth;
+				var y = Math.random()*window.innerHeight;
+				var s = new Star(x,y);
+				this.starArray.push(s);
+				s.diva.style.animation = "fadeIn 2s ease-in " + s.t + "s backwards";
+				parent.appendChild(s.diva);
+				s.diva.addEventListener("animationend", twinkle);
+			}
+
+		}
+
+		// https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Tips
+		fadeOut(){
+			const removeDiv = (e) => {
+				e.target.parentNode.removeChild(e.target);
+			}
+			const setFade = (e) => {
+				e.target.style.animation = "fadeOut 2s forwards";
+				e.target.addEventListener("animationend", removeDiv);
+			}
+
+			for(var i = 0; i < this.starArray.length; i++){
+				this.starArray[i].diva.addEventListener("animationiteration", setFade);
+			}
+		}
+
+	}
+
+	
+	var ss = new StarSystem(container);
+
+
+</script>
+</body>
+</html>
