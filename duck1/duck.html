@@ -1,0 +1,89 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>duck1</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			background-image: url("duck.svg");
+			width: 200px;
+			height: 200px;
+			transition: transform 1s ease-out;
+		}
+
+	</style>
+</head>
+<body id="container">
+	
+<div id="main"></div>
+
+
+
+
+<!----------------------------->
+<script type="text/javascript">
+
+	class Duck {
+		constructor(element){
+			this.div = element;
+			this.x = 0;
+			this.y = 0;
+			this.a = 0;
+		}
+	}
+
+	var d = document.getElementById("main");
+	var duck = new Duck(d);
+
+	document.addEventListener("click", moveDuck);
+	document.addEventListener("mousemove", rotateDuck);
+
+	function moveDuck(e){
+		duck.x = e.clientX - 100;
+		duck.y = e.clientY - 100;
+		duck.div.style.transform = 'translateY('+ duck.y +'px)';
+	    duck.div.style.transform += 'translateX('+ duck.x +'px)';
+	}
+
+	function rotateDuck(e){
+		//arctan of (o/a)
+		var opp = duck.y - e.clientY;
+		//var hyp = distance(duck.x, duck.y, e.clientX, e.clientY);
+		var adj = duck.x - e.clientX;
+		//var angle = Math.asin(opp/hyp);
+		duck.a += Math.atan(opp/adj);
+		duck.div.style.transform += 'rotate(' + duck.a + 'deg)';
+		//duck.a = angle;
+		//duck.div.rotate(angle);
+
+	}
+
+	function distance(x1, y1, x2, y2){
+		var a = x2 - x1;
+		var b = y2 - y1;
+		var c = Math.sqrt(a*a + b*b);
+		return c;
+	}
+
+</script>
+</body>
+</html>

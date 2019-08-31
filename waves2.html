@@ -1,0 +1,110 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>waves2</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		/*https://codepen.io/mburakerman/pen/eRZZEv*/
+		body {
+		  background: #333;
+		  padding: 0;
+		  margin: 0;
+		  //z-index: -2;
+		}
+
+		.wrapper {
+		  width: 500px;
+		  height: 500px;
+		  position: absolute;
+		  left: 50%;
+		  top: 50%;
+		  transform: translate(-50%, -50%);
+		  border-radius: 5px;
+		  background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
+		  overflow: hidden;
+		  opacity: 0.5;
+		  z-index: 0;
+		}
+
+		.wave {
+		  width: 1000px;
+		  height: 1025px;
+		  position: absolute;
+		  top: -25%;
+		  left: 50%;
+		  margin-left: -500px;
+		  margin-top: -500px;
+		  border-radius: 35%;
+		  background: rgba(255, 255, 255, .75);
+		  z-index: 2;
+		}
+
+		#w1 {
+			animation: wave 15s infinite linear;
+		}
+
+		#w2 {
+			animation: wave 15s infinite -5s linear;
+		}
+
+		@keyframes wave {
+		  from { transform: rotate(0deg);}
+		  from { transform: rotate(360deg);}
+		}
+
+		#sun {
+			position: absolute;
+			left: 50%;
+			top: 60%;
+			transform: translate(-50%, -50%);
+			border-radius: 50%;
+			width: 200px;
+			height: 200px;
+			background: rgba(255, 100, 0, .5);
+			z-index: 1;
+		}
+
+
+	</style>
+</head>
+<body id="container">
+	
+<div class="wrapper">
+  <div class="wave" id="w1"></div>
+</div>
+
+<div class="wrapper">
+  <div class="wave" id="w2"></div>
+</div>
+
+
+
+
+
+<!----------------------------->
+<script type="text/javascript">
+
+
+
+</script>
+</body>
+</html>
