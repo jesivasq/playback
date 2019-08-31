@@ -1,0 +1,84 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>clicker2</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			width: 200px;
+			height: 200px;
+			background: #fff;
+			margin: auto;
+		}
+
+
+	</style>
+</head>
+<body id="container">
+	
+<div id="main" onclick="c.on_click()"></div>
+
+
+
+
+<!----------------------------->
+<script type="text/javascript">
+
+	class Observable {
+		constructor(){
+			this.observers = [];
+		}
+
+		observe(observer){
+			this.observers.append(observer);
+		}
+
+		fire(){
+			this.observers.forEach(function(observer){
+				observer.fire();
+			});
+		}
+
+	}
+
+	class Clicker extends Observable {
+		constructor(){
+			super();
+			this.clicks = 0;
+		}
+
+		on_click(){
+			this.increment();
+		}
+
+		increment(){
+			this.clicks++;
+			this.fire();
+			console.log(this.clicks);
+		}
+	}
+
+	c = new Clicker();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>clicker</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			width: 200px;
+			height: 200px;
+			background: #fff;
+			margin: auto;
+		}
+
+
+	</style>
+</head>
+<body id="container">
+	
+<div id="main" onclick="c.addOne()"></div>
+
+
+
+
+<!----------------------------->
+<script type="text/javascript">
+
+	class Clicker{
+		constructor(){
+			this.clicks = 0;
+		}
+
+		addOne(){
+			this.clicks++;
+			console.log(this.clicks);
+		}
+	}
+
+	c = new Clicker();
+
+</script>
+</body>
+</html>

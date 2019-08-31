@@ -1,0 +1,679 @@
+<<<<<<< HEAD
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>tinymusic2</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			width: 30px;
+			height: 30px;
+			background: white;
+			margin: auto;
+		}
+
+		h1 {
+			border: 1px solid white;
+			padding: 10px;
+			margin: 5px;
+		}
+
+
+	</style>
+</head>
+<body id="container">
+	
+<h1 onclick="m.btn1.play()">button 1</h1>
+<h1 onclick="m.btn2.play()">button 2</h1>
+<h1 onclick="m.btn3.play()">button 3</h1>
+<h1 onclick="m.btn4.play()">button 4</h1>
+<h1 onclick="m.playTwinkle()">twinkle</h1>
+<h1 onclick="m.success.play()">success</h1>
+<h1 onclick="m.fail.play()">fail</h1>
+<h1 onclick="m.playChord()">chord</h1>
+<div id="main" onclick="m.stopAll()">stop</div>
+
+<script src="TinyMusic.min.js"></script> 
+<!----------------------------->
+<script type="text/javascript">
+// import * as TinyMusic from "TinyMusic.min.js";
+
+
+// create a new Web Audio API context
+var ac = new AudioContext();
+
+// set the playback tempo (120 beats per minute)
+var tempo = 120;
+
+// create some notes ('<Note Name> <Beat Length>')
+// q = quarter note, h = half note (more on that later)
+//var note1 = new TinyMusic.Note('G4 q');
+//var note2 = new TinyMusic.Note('E4 q');
+//var note3 = new TinyMusic.Note('E4 h');
+
+// create a new sequence
+var sequence = new TinyMusic.Sequence( ac, tempo, [
+		'G3 q',
+		'E4 q',
+		'C4 h'
+
+	]);
+
+// add the notes
+//sequence.push( note1, note2, note3 );
+
+// disable looping
+sequence.loop = false;
+
+// play it
+//sequence.play();
+
+var sequence2 = new TinyMusic.Sequence( ac, 360, [
+		'C4 e',
+		'E4 e',
+		'G4 e',
+		'C5 q'
+	]);
+sequence2.loop = false;
+
+var seqBtn1 = new TinyMusic.Sequence(ac, tempo, [
+		'C4 e'
+	]);
+seqBtn1.loop = false;
+
+var seqBtn2 = new TinyMusic.Sequence(ac, tempo, [
+		'E4 e'
+	]);
+seqBtn2.loop = false;
+
+var seqBtn3 = new TinyMusic.Sequence(ac, tempo, [
+		'G4 e'
+	]);
+seqBtn3.loop = false;
+
+var seqBtn4 = new TinyMusic.Sequence(ac, tempo, [
+		'C5 e'
+	]);
+seqBtn4.loop = false;
+
+
+var seqTwinkle = new TinyMusic.Sequence(ac, 240, [
+		'C3 q',
+		'C3 q',
+		'G3 q',
+		'G3 q',
+		'A3 q',
+		'A3 q',
+		'G3 h',
+		'F3 q',
+		'F3 q',
+		'E3 q',
+		'E3 q',
+		'D3 q',
+		'D3 q',
+		'C3 h'
+	]);
+seqTwinkle.loop = false;
+seqTwinkle.gain.gain.value = 0.5; //volume
+seqTwinkle.staccato = 0.05;
+seqTwinkle.smoothing = 0.4;
+
+var seqTwinkleBass = new TinyMusic.Sequence(ac, 240, [
+		'C2 w',
+		'F2 h',
+		'C2 h',
+		'F2 h',
+		'C2 h',
+		'G2 h',
+		'C2 h'
+	]);
+seqTwinkleBass.loop = false;
+seqTwinkleBass.gain.gain.value = 0.4;
+seqTwinkleBass.staccato = 0.05;
+//seqTwinkleBass.smoothing = 0.4;
+
+function playSound(sound){
+	switch( sound ){
+		case 1:
+			seqBtn1.play();
+			break;
+		case 2:
+			seqBtn2.play();
+			break;
+		case 3:
+			seqBtn3.play();
+			break;
+		case 4:
+			seqBtn4.play();
+			break;
+		case "twinkle":
+			seqTwinkle.play();
+			seqTwinkleBass.play();
+			break;
+		default:
+			console.log("no sound");
+	}
+}
+
+
+class Music {
+	constructor() {
+		// 
+		this.ac = new AudioContext();
+		this.btnTempo = 120;
+		this.twinkleTempo = 240;
+		this.ary = [];
+
+		this.btn1 = new TinyMusic.Sequence(this.ac, this.btnTempo, [
+				'C4 e'
+			]);
+		this.ary.push(this.btn1);
+
+		this.btn2 = new TinyMusic.Sequence(this.ac, this.btnTempo, [
+				'E4 e'
+			]);
+		this.ary.push(this.btn2);
+
+		this.btn3 = new TinyMusic.Sequence(this.ac, this.btnTempo, [
+				'G4 e'
+			]);
+		this.ary.push(this.btn3);
+
+		this.btn4 = new TinyMusic.Sequence(this.ac, this.btnTempo, [
+				'C5 e'
+			]);
+		this.ary.push(this.btn4);
+
+		this.success = new TinyMusic.Sequence(this.ac, this.twinkleTempo, [
+				'C5 e',
+				'E5 e',
+				'G5 e',
+				'C6 e'
+			]);
+		this.ary.push(this.success);
+
+		this.fail = new TinyMusic.Sequence(this.ac, this.twinkleTempo, [
+				'C4 e',
+				'G3 e',
+				'E3 e',
+				'C3 q'
+			]);
+		this.ary.push(this.fail);
+
+		this.twinkleLead = new TinyMusic.Sequence(this.ac, this.twinkleTempo, [
+				'C3 q',
+				'C3 q',
+				'G3 q',
+				'G3 q',
+				'A3 q',
+				'A3 q',
+				'G3 h',
+				'F3 q',
+				'F3 q',
+				'E3 q',
+				'E3 q',
+				'D3 q',
+				'D3 q',
+				'C3 h',
+
+				'G3 q',
+				'G3 q',
+				'F3 q',
+				'F3 q',
+				'E3 q',
+				'E3 q',
+				'D3 h',
+
+				'G3 q',
+				'G3 q',
+				'F3 q',
+				'F3 q',
+				'E3 q',
+				'E3 q',
+				'D3 h',
+
+				'C3 q',
+				'C3 q',
+				'G3 q',
+				'G3 q',
+				'A3 q',
+				'A3 q',
+				'G3 h',
+				'F3 q',
+				'F3 q',
+				'E3 q',
+				'E3 q',
+				'D3 q',
+				'D3 q',
+				'C3 h'
+
+			]);
+		this.ary.push(this.twinkleLead);
+
+		this.twinkleBass = new TinyMusic.Sequence(this.ac, 240, [
+				'C2 w',
+				'F2 h',
+				'C2 h',
+				'F2 h',
+				'C2 h',
+				'G2 h',
+				'C2 h',
+
+				'C2 h',
+				'F2 h',
+				'C2 h',
+				'G2 h',
+
+				'C2 h',
+				'F2 h',
+				'C2 h',
+				'G2 h',
+
+				'C2 w',
+				'F2 h',
+				'C2 h',
+				'F2 h',
+				'C2 h',
+				'G2 h',
+				'C2 h'
+				
+			]);
+		this.ary.push(this.twinkleBass);
+
+		for( var i = 0; i < this.ary.length; i++){
+			this.ary[i].loop = false;
+			this.ary[i].gain.gain.value = 0.2;
+			this.ary[i].staccato = 0.05;
+		}
+		this.twinkleBass.gain.gain.value -= 0.1;
+		this.twinkleLead.smoothing = 0.4;
+
+	}
+
+	playTwinkle(){
+		this.twinkleLead.play();
+		this.twinkleBass.play();
+	}
+
+	playChord(){
+		this.btn1.play();
+		this.btn2.play();
+		this.btn3.play();
+		this.btn4.play();
+	}
+
+
+	stopAll(){
+		for( var i = 0; i < this.ary.length; i++){
+			this.ary[i].stop();
+		}
+	}
+
+
+}
+
+var m = new Music();
+
+
+</script>
+</body>
+</html>
+=======
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>tinymusic2</title>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			width: 30px;
+			height: 30px;
+			background: white;
+			margin: auto;
+		}
+
+		h1 {
+			border: 1px solid white;
+			padding: 10px;
+			margin: 5px;
+		}
+
+
+	</style>
+</head>
+<body id="container">
+	
+<h1 onclick="m.btn1.play()">button 1</h1>
+<h1 onclick="m.btn2.play()">button 2</h1>
+<h1 onclick="m.btn3.play()">button 3</h1>
+<h1 onclick="m.btn4.play()">button 4</h1>
+<h1 onclick="m.playTwinkle()">twinkle</h1>
+<h1 onclick="m.success.play()">success</h1>
+<h1 onclick="m.fail.play()">fail</h1>
+<h1 onclick="m.playChord()">chord</h1>
+<div id="main" onclick="m.stopAll()">stop</div>
+
+<script src="TinyMusic.min.js"></script> 
+<!----------------------------->
+<script type="text/javascript">
+// import * as TinyMusic from "TinyMusic.min.js";
+
+
+// create a new Web Audio API context
+var ac = new AudioContext();
+
+// set the playback tempo (120 beats per minute)
+var tempo = 120;
+
+// create some notes ('<Note Name> <Beat Length>')
+// q = quarter note, h = half note (more on that later)
+//var note1 = new TinyMusic.Note('G4 q');
+//var note2 = new TinyMusic.Note('E4 q');
+//var note3 = new TinyMusic.Note('E4 h');
+
+// create a new sequence
+var sequence = new TinyMusic.Sequence( ac, tempo, [
+		'G3 q',
+		'E4 q',
+		'C4 h'
+
+	]);
+
+// add the notes
+//sequence.push( note1, note2, note3 );
+
+// disable looping
+sequence.loop = false;
+
+// play it
+//sequence.play();
+
+var sequence2 = new TinyMusic.Sequence( ac, 360, [
+		'C4 e',
+		'E4 e',
+		'G4 e',
+		'C5 q'
+	]);
+sequence2.loop = false;
+
+var seqBtn1 = new TinyMusic.Sequence(ac, tempo, [
+		'C4 e'
+	]);
+seqBtn1.loop = false;
+
+var seqBtn2 = new TinyMusic.Sequence(ac, tempo, [
+		'E4 e'
+	]);
+seqBtn2.loop = false;
+
+var seqBtn3 = new TinyMusic.Sequence(ac, tempo, [
+		'G4 e'
+	]);
+seqBtn3.loop = false;
+
+var seqBtn4 = new TinyMusic.Sequence(ac, tempo, [
+		'C5 e'
+	]);
+seqBtn4.loop = false;
+
+
+var seqTwinkle = new TinyMusic.Sequence(ac, 240, [
+		'C3 q',
+		'C3 q',
+		'G3 q',
+		'G3 q',
+		'A3 q',
+		'A3 q',
+		'G3 h',
+		'F3 q',
+		'F3 q',
+		'E3 q',
+		'E3 q',
+		'D3 q',
+		'D3 q',
+		'C3 h'
+	]);
+seqTwinkle.loop = false;
+seqTwinkle.gain.gain.value = 0.5; //volume
+seqTwinkle.staccato = 0.05;
+seqTwinkle.smoothing = 0.4;
+
+var seqTwinkleBass = new TinyMusic.Sequence(ac, 240, [
+		'C2 w',
+		'F2 h',
+		'C2 h',
+		'F2 h',
+		'C2 h',
+		'G2 h',
+		'C2 h'
+	]);
+seqTwinkleBass.loop = false;
+seqTwinkleBass.gain.gain.value = 0.4;
+seqTwinkleBass.staccato = 0.05;
+//seqTwinkleBass.smoothing = 0.4;
+
+function playSound(sound){
+	switch( sound ){
+		case 1:
+			seqBtn1.play();
+			break;
+		case 2:
+			seqBtn2.play();
+			break;
+		case 3:
+			seqBtn3.play();
+			break;
+		case 4:
+			seqBtn4.play();
+			break;
+		case "twinkle":
+			seqTwinkle.play();
+			seqTwinkleBass.play();
+			break;
+		default:
+			console.log("no sound");
+	}
+}
+
+
+class Music {
+	constructor() {
+		// 
+		this.ac = new AudioContext();
+		this.btnTempo = 120;
+		this.twinkleTempo = 240;
+		this.ary = [];
+
+		this.btn1 = new TinyMusic.Sequence(this.ac, this.btnTempo, [
+				'C4 e'
+			]);
+		this.ary.push(this.btn1);
+
+		this.btn2 = new TinyMusic.Sequence(this.ac, this.btnTempo, [
+				'E4 e'
+			]);
+		this.ary.push(this.btn2);
+
+		this.btn3 = new TinyMusic.Sequence(this.ac, this.btnTempo, [
+				'G4 e'
+			]);
+		this.ary.push(this.btn3);
+
+		this.btn4 = new TinyMusic.Sequence(this.ac, this.btnTempo, [
+				'C5 e'
+			]);
+		this.ary.push(this.btn4);
+
+		this.success = new TinyMusic.Sequence(this.ac, this.twinkleTempo, [
+				'C5 e',
+				'E5 e',
+				'G5 e',
+				'C6 e'
+			]);
+		this.ary.push(this.success);
+
+		this.fail = new TinyMusic.Sequence(this.ac, this.twinkleTempo, [
+				'C4 e',
+				'G3 e',
+				'E3 e',
+				'C3 q'
+			]);
+		this.ary.push(this.fail);
+
+		this.twinkleLead = new TinyMusic.Sequence(this.ac, this.twinkleTempo, [
+				'C3 q',
+				'C3 q',
+				'G3 q',
+				'G3 q',
+				'A3 q',
+				'A3 q',
+				'G3 h',
+				'F3 q',
+				'F3 q',
+				'E3 q',
+				'E3 q',
+				'D3 q',
+				'D3 q',
+				'C3 h',
+
+				'G3 q',
+				'G3 q',
+				'F3 q',
+				'F3 q',
+				'E3 q',
+				'E3 q',
+				'D3 h',
+
+				'G3 q',
+				'G3 q',
+				'F3 q',
+				'F3 q',
+				'E3 q',
+				'E3 q',
+				'D3 h',
+
+				'C3 q',
+				'C3 q',
+				'G3 q',
+				'G3 q',
+				'A3 q',
+				'A3 q',
+				'G3 h',
+				'F3 q',
+				'F3 q',
+				'E3 q',
+				'E3 q',
+				'D3 q',
+				'D3 q',
+				'C3 h'
+
+			]);
+		this.ary.push(this.twinkleLead);
+
+		this.twinkleBass = new TinyMusic.Sequence(this.ac, 240, [
+				'C2 w',
+				'F2 h',
+				'C2 h',
+				'F2 h',
+				'C2 h',
+				'G2 h',
+				'C2 h',
+
+				'C2 h',
+				'F2 h',
+				'C2 h',
+				'G2 h',
+
+				'C2 h',
+				'F2 h',
+				'C2 h',
+				'G2 h',
+
+				'C2 w',
+				'F2 h',
+				'C2 h',
+				'F2 h',
+				'C2 h',
+				'G2 h',
+				'C2 h'
+				
+			]);
+		this.ary.push(this.twinkleBass);
+
+		for( var i = 0; i < this.ary.length; i++){
+			this.ary[i].loop = false;
+			this.ary[i].gain.gain.value = 0.2;
+			this.ary[i].staccato = 0.05;
+		}
+		this.twinkleBass.gain.gain.value -= 0.1;
+		this.twinkleLead.smoothing = 0.4;
+
+	}
+
+	playTwinkle(){
+		this.twinkleLead.play();
+		this.twinkleBass.play();
+	}
+
+	playChord(){
+		this.btn1.play();
+		this.btn2.play();
+		this.btn3.play();
+		this.btn4.play();
+	}
+
+
+	stopAll(){
+		for( var i = 0; i < this.ary.length; i++){
+			this.ary[i].stop();
+		}
+	}
+
+
+}
+
+var m = new Music();
+
+
+</script>
+</body>
+</html>
+>>>>>>> da594fc23ce7c9f8c4532430f41e2923aee4865c
