@@ -4,11 +4,15 @@
 <head>
 
 	<meta charset="utf-8">
-	<title>duck1</title>
+	<title>duck</title>
+
+	<!-- Greensock -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/utils/Draggable.min.js"></script>
 
 	<style>
 		html {
-			background: black;
+			background: #aaddff;
 			padding:0px;
 			margin:0px;
 			font-family: sans-serif;
@@ -55,25 +59,21 @@
 	var duck = new Duck(d);
 
 	document.addEventListener("click", moveDuck);
-	document.addEventListener("mousemove", rotateDuck);
 
 	function moveDuck(e){
+		opp = e.clientY - duck.y;
+	    adj = e.clientX - duck.x;
+	    duck.a = Math.atan(opp/adj)*180/Math.PI;
+	    if( e.clientX < duck.x){
+	    	duck.a += 180;
+	    }
+
 		duck.x = e.clientX - 100;
 		duck.y = e.clientY - 100;
-		duck.div.style.transform = 'translateY('+ duck.y +'px)';
-	    duck.div.style.transform += 'translateX('+ duck.x +'px)';
-	}
-
-	function rotateDuck(e){
-		//arctan of (o/a)
-		var opp = duck.y - e.clientY;
-		//var hyp = distance(duck.x, duck.y, e.clientX, e.clientY);
-		var adj = duck.x - e.clientX;
-		//var angle = Math.asin(opp/hyp);
-		duck.a += Math.atan(opp/adj);
-		duck.div.style.transform += 'rotate(' + duck.a + 'deg)';
-		//duck.a = angle;
-		//duck.div.rotate(angle);
+	    
+	   	tl = new TimelineMax();
+	   	tl.to(duck.div, 0.25, {rotation:duck.a})
+	   		.to(duck.div, 1, {x:duck.x, y:duck.y});
 
 	}
 
