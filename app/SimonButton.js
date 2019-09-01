@@ -25,4 +25,18 @@ class SimonButton {
     playTone() {
         this.musicPointer.play(this.tone);
     }
+
+    onPress() {
+        blink();
+
+        gamePointer.guessesRemaining--;
+        gamePointer.chosen += this.id;
+
+        if(gamePointer.chosen == gamePointer.target){
+            // then the User has successfully completed the sequence
+            // and move on to the next level
+        } else if (gamePointer.guessesRemaining == 0){
+            // then the User has lost the game
+        }
+    }
 }
