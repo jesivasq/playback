@@ -62,16 +62,12 @@ class Confetto{
 		this.g = 1; // gravity
 
 		this.diva = document.createElement("div");
-		//this.diva.classList.add("confetto");
 		this.diva.classList.add("svgStar");
 		this.diva.style.left = this.x + "px";
 		this.diva.style.top = this.y + "px";
 		this.diva.style.width = this.d + "px";
 		this.diva.style.height = this.d + "px";
 		this.diva.style.animation = "rotate 3s infinite, fadeOut 1s forwards 1s";
-		
-		//this.diva.style.background = colors[Math.floor(Math.random()*4)];
-		//container.appendChild(this.diva);
 		this.diva.style.background = "url('star.svg')";
 		
 	}
@@ -97,7 +93,7 @@ class ConfettiSystem{
 	constructor(parent){
 		this.confettiArray = [];
 		this.stopConfetti = false;
-		this.numConfetti = 200;
+		this.numConfetti = 40;
 
 		for(var i = 0; i < this.numConfetti/2; i++){
 			
@@ -620,7 +616,7 @@ function moveParticles(timestamp){
 // beginning state
 function resetParticles(){
 	//document.getElementById("container").innerHTML = "";
-	particleCount = 500;
+	particleCount = 80;
 	particles = [];
 	particleDivs = [];
 	console.log("resetParticles");	
