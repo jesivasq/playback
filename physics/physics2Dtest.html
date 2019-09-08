@@ -1,0 +1,55 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>Physics2D</title>
+
+	<!-- Greensock -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/utils/Draggable.min.js"></script>
+	<script src="Physics2DPlugin.min.js"></script>
+
+	<style>
+		html {
+			background: black;
+			padding:0px;
+			margin:0px;
+			font-family: sans-serif;
+			color: white;
+			overflow: hidden;
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			min-height: 100vh;
+			display: flex;
+		}
+
+		#main {
+			width: 50px;
+			height: 50px;
+			background: white;
+			margin:auto;
+		}
+
+	</style>
+</head>
+<body id="container">
+	
+<div id="main"></div>
+
+
+
+
+<!----------------------------->
+<script type="text/javascript">
+	element = document.getElementById("main");
+	TweenMax.to(element, 5, {physics2D:{velocity:300, angle:-60, gravity:800}, rotation:360});
+
+
+</script>
+</body>
+</html>
